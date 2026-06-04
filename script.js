@@ -1,9 +1,9 @@
-// Cyber Ghost - Terminal, Matrix & HUD Workspace Engine
+// GHOST-OS v1.0.8 - Virtual Desktop Interface Logic
 // Designed for Samad Shaikh
 
 document.addEventListener("DOMContentLoaded", () => {
     // ----------------------------------------------------
-    // MATRIX RAIN BACKGROUND ENGINE
+    // MATRIX RAIN BACKGROUND CONFIGS
     // ----------------------------------------------------
     const canvas = document.getElementById("matrix-canvas");
     const ctx = canvas.getContext("2d");
@@ -11,22 +11,22 @@ document.addEventListener("DOMContentLoaded", () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // Denser character drops as requested
     const charList = "ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ<>[]{}*#@$%";
     const alphabet = charList.split("");
 
-    const fontSize = 14; // Slightly smaller for higher density
+    const fontSize = 14;
     let columns = width / fontSize;
 
     const rainDrops = [];
     for (let x = 0; x < columns; x++) {
-        rainDrops[x] = Math.random() * -100; // Offset start positions
+        rainDrops[x] = Math.random() * -100;
     }
 
     let matrixColor = "#00ff66";
+    let speed = 25;
 
     const drawMatrix = () => {
-        ctx.fillStyle = "rgba(2, 5, 11, 0.08)"; // Dark trails
+        ctx.fillStyle = "rgba(1, 3, 7, 0.08)";
         ctx.fillRect(0, 0, width, height);
 
         ctx.fillStyle = matrixColor;
@@ -36,14 +36,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const text = alphabet[Math.floor(Math.random() * alphabet.length)];
             ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
 
-            if (rainDrops[i] * fontSize > height && Math.random() > 0.98) {
+            if (rainDrops[i] * fontSize > height && Math.random() > 0.985) {
                 rainDrops[i] = 0;
             }
             rainDrops[i]++;
         }
     };
 
-    let matrixInterval = setInterval(drawMatrix, 25); // Faster rate (25ms)
+    let matrixInterval = setInterval(drawMatrix, speed);
+
+    const updateMatrixSpeed = (newSpeed) => {
+        clearInterval(matrixInterval);
+        speed = newSpeed;
+        matrixInterval = setInterval(drawMatrix, speed);
+    };
 
     window.addEventListener("resize", () => {
         width = canvas.width = window.innerWidth;
@@ -57,217 +63,299 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // DYNAMIC HUD DIAGNOSTICS & METERS
+    // WINDOW FOCUS & STACK MANAGER
     // ----------------------------------------------------
-    const cpuFill = document.getElementById("cpu-fill");
-    const cpuVal = document.getElementById("cpu-val");
-    const ramFill = document.getElementById("ram-fill");
-    const ramVal = document.getElementById("ram-val");
-    const netFill = document.getElementById("net-fill");
-    const netVal = document.getElementById("net-val");
+    const windows = document.querySelectorAll(".window");
+    const taskbarIcons = document.querySelectorAll(".tb-icon");
 
-    // Fluctuator for diagnostic percentages
-    const updateMeters = () => {
-        const cpu = Math.floor(Math.random() * 45) + 15; // 15% - 60%
-        const ram = Math.floor(Math.random() * 20) + 45; // 45% - 65%
-        const net = Math.floor(Math.random() * 30) + 60; // 60% - 90%
-
-        if(cpuFill) { cpuFill.style.width = cpu + "%"; cpuVal.textContent = cpu + "%"; }
-        if(ramFill) { ramFill.style.width = ram + "%"; ramVal.textContent = ram + "%"; }
-        if(netFill) { netFill.style.width = net + "%"; netVal.textContent = net + "%"; }
-    };
-
-    setInterval(updateMeters, 2000);
-    updateMeters(); // Initial call
-
-
-    const consoleOutput = document.getElementById("console-output-box");
-    const logTemplates = [
-        { text: "[ANALYZING] Scanning Samad's experience... Found 3+ years in Full-Stack Development.", class: "log-info" },
-        { text: "[DECRYPTING] Extracting projects... MockMate-AI, Planora, WebLens parsed successfully.", class: "log-info" },
-        { text: "[SUCCESS] Database connection stable. Welcome Guest Recruiter.", class: "log-success" },
-        { text: "[INFO] Skills verification complete: Node.js, Python, TypeScript, Go & Cloud tools.", class: "log-info" },
-        { text: "[INFO] Scanning system architecture... Docker containers running, APIs optimized.", class: "log-info" },
-        { text: "[SUCCESS] Resume payload mapped. Click 'View Resume Shell' to inspect.", class: "log-success" },
-        { text: "[INFO] Mapping developer parameters: Frontend (React/Next.js) | Backend (Express/FastAPI).", class: "log-info" },
-        { text: "[INFO] Telemetry synced. GitHub repositories active & tracked.", class: "log-info" },
-        { text: "[SUCCESS] Portfolio gateway loaded. All systems nominal.", class: "log-success" }
-    ];
-
-    const generateLog = () => {
-        if (!consoleOutput) return;
-
-        const template = logTemplates[Math.floor(Math.random() * logTemplates.length)];
-        const time = new Date().toLocaleTimeString();
+    const focusWindow = (targetWin) => {
+        windows.forEach(win => {
+            win.classList.remove("focused");
+        });
+        targetWin.classList.add("focused");
         
-        const logLine = document.createElement("div");
-        logLine.className = `log-item ${template.class}`;
-        logLine.innerHTML = `<span style="color: #007733;">[${time}]</span> ${template.text}`;
-
-        consoleOutput.appendChild(logLine);
-
-        // Keep last 25 logs to prevent memory overflow
-        while (consoleOutput.children.length > 25) {
-            consoleOutput.removeChild(consoleOutput.firstChild);
-        }
-
-        // Scroll to bottom
-        consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        // Sync taskbar active highlights
+        const winId = targetWin.id;
+        taskbarIcons.forEach(icon => {
+            if (icon.getAttribute("data-window") === winId) {
+                icon.classList.add("active");
+            } else {
+                // If the target window is open, keep other active icons highlighted too
+                const referencedWin = document.getElementById(icon.getAttribute("data-window"));
+                if (referencedWin && referencedWin.classList.contains("open")) {
+                    icon.classList.add("active");
+                } else {
+                    icon.classList.remove("active");
+                }
+            }
+        });
     };
 
-    // Spin log feed
-    setInterval(generateLog, 3500);
-    // Print initial logs
-    for (let i = 0; i < 5; i++) {
-        setTimeout(generateLog, i * 400);
+    // Attach click events on windows to trigger focus
+    windows.forEach(win => {
+        win.addEventListener("mousedown", () => {
+            focusWindow(win);
+        });
+    });
+
+
+    // ----------------------------------------------------
+    // LAUNCHERS / CONTROLLERS / SHUTDOWN
+    // ----------------------------------------------------
+    const openWindow = (winId) => {
+        const win = document.getElementById(winId);
+        if (win) {
+            win.classList.add("open");
+            focusWindow(win);
+            
+            // If opening terminal, trigger auto-typing sequence
+            if (winId === "win-terminal") {
+                triggerTerminalBoot();
+            }
+        }
+    };
+
+    const closeWindow = (winId) => {
+        const win = document.getElementById(winId);
+        if (win) {
+            win.classList.remove("open");
+            win.classList.remove("focused");
+            
+            // Sync taskbar icon
+            const icon = document.querySelector(`.tb-icon[data-window="${winId}"]`);
+            if (icon) icon.classList.remove("active");
+
+            // Stop terminal frame loading if closing terminal
+            if (winId === "win-terminal") {
+                document.getElementById("resume-iframe").src = "";
+                document.getElementById("resume-embed-container").style.display = "none";
+            }
+        }
+    };
+
+    // Desktop icons click
+    const desktopIcons = document.querySelectorAll(".desktop-icon");
+    desktopIcons.forEach(icon => {
+        icon.addEventListener("click", () => {
+            const targetWin = icon.getAttribute("data-window");
+            openWindow(targetWin);
+        });
+    });
+
+    // Window controls dots (Close button)
+    const closeButtons = document.querySelectorAll(".win-close");
+    closeButtons.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const win = btn.closest(".window");
+            if (win) closeWindow(win.id);
+        });
+    });
+
+    // Window controls minimize button
+    const minButtons = document.querySelectorAll(".win-min");
+    minButtons.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const win = btn.closest(".window");
+            if (win) closeWindow(win.id);
+        });
+    });
+
+    // Taskbar icons quick launch / togglers
+    taskbarIcons.forEach(icon => {
+        icon.addEventListener("click", () => {
+            const targetWinId = icon.getAttribute("data-window");
+            const win = document.getElementById(targetWinId);
+            
+            if (win) {
+                if (win.classList.contains("open")) {
+                    if (win.classList.contains("focused")) {
+                        closeWindow(targetWinId); // Minimize if open and focused
+                    } else {
+                        focusWindow(win); // Bring to front if open but backgrounded
+                    }
+                } else {
+                    openWindow(targetWinId); // Launch if closed
+                }
+            }
+        });
+    });
+
+    // Start Menu toggler (Open all system files)
+    const startBtn = document.getElementById("start-btn");
+    startBtn.addEventListener("click", () => {
+        openWindow("win-profile");
+    });
+
+
+    // ----------------------------------------------------
+    // SETTINGS CONTROL DESKTOP PANEL
+    // ----------------------------------------------------
+    const cfgGreen = document.getElementById("cfg-green");
+    const cfgCyan = document.getElementById("cfg-cyan");
+    const cfgRed = document.getElementById("cfg-red");
+    const cfgPurple = document.getElementById("cfg-purple");
+    const cfgSpeedFast = document.getElementById("cfg-speed-fast");
+    const cfgSpeedNormal = document.getElementById("cfg-speed-normal");
+
+    if (cfgGreen) {
+        cfgGreen.addEventListener("click", () => {
+            matrixColor = "#00ff66";
+            printTermLine("Matrix theme set to GREEN", "t-green");
+        });
+    }
+    if (cfgCyan) {
+        cfgCyan.addEventListener("click", () => {
+            matrixColor = "#00f3ff";
+            printTermLine("Matrix theme set to CYAN", "t-cyan");
+        });
+    }
+    if (cfgRed) {
+        cfgRed.addEventListener("click", () => {
+            matrixColor = "#ff0055";
+            printTermLine("Matrix theme set to RED", "t-red");
+        });
+    }
+    if (cfgPurple) {
+        cfgPurple.addEventListener("click", () => {
+            matrixColor = "#af40ff";
+            printTermLine("Matrix theme set to PURPLE", "t-cyan");
+        });
+    }
+    if (cfgSpeedFast) {
+        cfgSpeedFast.addEventListener("click", () => {
+            updateMatrixSpeed(15);
+            printTermLine("Rain drop acceleration active (15ms sleep delay)", "t-green");
+        });
+    }
+    if (cfgSpeedNormal) {
+        cfgSpeedNormal.addEventListener("click", () => {
+            updateMatrixSpeed(35);
+            printTermLine("Rain drop acceleration normal (35ms sleep delay)", "t-dim");
+        });
     }
 
 
     // ----------------------------------------------------
-    // SYSTEM DATE/TIME HEADER
+    // SYSTEM TASKBAR CLOCK WORKSPACE
     // ----------------------------------------------------
-    const headerTime = document.getElementById("header-time");
-    const updateHeaderTime = () => {
-        if (headerTime) {
+    const tbTime = document.getElementById("tb-time");
+    const updateTime = () => {
+        if (tbTime) {
             const now = new Date();
-            headerTime.textContent = now.toLocaleDateString() + " // " + now.toLocaleTimeString();
+            tbTime.textContent = now.toLocaleDateString() + " // " + now.toLocaleTimeString();
         }
     };
-    setInterval(updateHeaderTime, 1000);
-    updateHeaderTime();
+    setInterval(updateTime, 1000);
+    updateTime();
 
 
     // ----------------------------------------------------
-    // INTERACTIVE TERMINAL SIMULATOR
+    // INTERACTIVE SHELL LOGIC (RESUME PANEL)
     // ----------------------------------------------------
-    const terminalOverlay = document.getElementById("terminal-overlay");
-    const viewResumeBtn = document.getElementById("view-resume-btn");
-    const closeBtn = document.getElementById("terminal-close");
-    const terminalBody = document.getElementById("terminal-body");
-    const terminalLog = document.getElementById("terminal-log");
-    const cmdInput = document.getElementById("terminal-input");
-    const embedContainer = document.getElementById("resume-embed-container");
-    const embedIframe = document.getElementById("resume-iframe");
-    const iframeLoader = document.getElementById("iframe-loader");
-
-    let terminalActive = false;
+    const termBody = document.getElementById("term-body");
+    const termLogs = document.getElementById("term-logs");
+    const termInput = document.getElementById("term-input");
+    const pdfContainer = document.getElementById("pdf-viewer-panel");
+    const pdfIframe = document.getElementById("pdf-iframe");
+    const pdfLoader = document.getElementById("pdf-loader");
 
     const simulateTyping = async (text, delay = 50) => {
-        cmdInput.disabled = true;
-        cmdInput.value = "";
+        termInput.disabled = true;
+        termInput.value = "";
         for (let i = 0; i < text.length; i++) {
-            cmdInput.value += text[i];
+            termInput.value += text[i];
             await new Promise(resolve => setTimeout(resolve, delay));
         }
-        cmdInput.disabled = false;
+        termInput.disabled = false;
     };
 
-    const printLine = (text, className = "") => {
+    const printTermLine = (text, className = "") => {
         const p = document.createElement("p");
         p.className = className;
         p.innerHTML = text;
-        terminalLog.appendChild(p);
-        terminalBody.scrollTop = terminalBody.scrollHeight;
+        termLogs.appendChild(p);
+        termBody.scrollTop = termBody.scrollHeight;
     };
 
-    const clearLogs = () => {
-        terminalLog.innerHTML = "";
-        embedContainer.style.display = "none";
+    const clearTermLogs = () => {
+        termLogs.innerHTML = "";
+        pdfContainer.style.display = "none";
     };
 
-    // Auto write command and boot sequence on click
-    viewResumeBtn.addEventListener("click", async (e) => {
-        e.preventDefault();
+    const triggerTerminalBoot = async () => {
+        clearTermLogs();
+        printTermLine(`[BOOT] INITIALIZING SECURE SHELL SYSTEM v2.0...`, "t-cyan");
+        await new Promise(resolve => setTimeout(resolve, 500));
         
-        terminalOverlay.classList.add("active");
-        terminalActive = true;
-        clearLogs();
+        printTermLine(`[SUCCESS] Authorized decrypt handshake: samadshaikh.me secure portal link active.`, "t-green");
+        printTermLine(`Platform: GHOST-OS-v1 // Security Level: Secure-G2`, "t-dim");
+        printTermLine(`------------------------------------------------------------------`, "t-dim");
+        printTermLine(`guest@cyberghost:~$`, "t-cyan");
         
-        printLine(`[CONNECTING] Establishing secure handshake with samadshaikh.me...`, "line-cyan");
-        await new Promise(resolve => setTimeout(resolve, 600));
+        await simulateTyping("cat resume_samad_shaikh.pdf", 45);
         
-        printLine(`[SUCCESS] Authorized secure gateway bypass. Shell interface loaded.`, "line-green");
-        printLine(`Host: Samad-Shaikh-Network // Client: SSL-TLS-1.3`, "line-dim");
-        printLine(`------------------------------------------------------------------`, "line-dim");
-        
-        printLine(`guest@cyberghost:~$`, "line-cyan");
-        
-        // Auto-type view command
-        await simulateTyping("cat resume_samad_shaikh.pdf", 50);
-        
-        // Execute the command
-        handleCommand("cat resume_samad_shaikh.pdf");
-        cmdInput.value = "";
-        cmdInput.focus();
-    });
-
-    const closeTerminal = () => {
-        terminalOverlay.classList.remove("active");
-        terminalActive = false;
-        embedIframe.src = "";
-        embedContainer.style.display = "none";
+        handleShellCommand("cat resume_samad_shaikh.pdf");
+        termInput.value = "";
+        termInput.focus();
     };
 
-    closeBtn.addEventListener("click", closeTerminal);
-    terminalOverlay.addEventListener("click", (e) => {
-        if (e.target === terminalOverlay) closeTerminal();
-    });
-
-    cmdInput.addEventListener("keydown", (e) => {
+    termInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
-            const fullVal = cmdInput.value.trim();
-            if (fullVal) {
-                printLine(`guest@cyberghost:~$ ${fullVal}`, "line-cyan");
-                handleCommand(fullVal.toLowerCase());
+            const val = termInput.value.trim();
+            if (val) {
+                printTermLine(`guest@cyberghost:~$ ${val}`, "t-cyan");
+                handleShellCommand(val.toLowerCase());
             }
-            cmdInput.value = "";
+            termInput.value = "";
         }
     });
 
-    const handleCommand = (cmd) => {
+    const handleShellCommand = (cmd) => {
         const args = cmd.split(" ");
-        const baseCmd = args[0];
+        const base = args[0];
 
-        switch (baseCmd) {
+        switch (base) {
             case "help":
-                printLine("Workspace Shell Protocol Commands:", "line-green");
-                printLine("&nbsp;&nbsp;about&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Bio summary profile of Samad Shaikh");
-                printLine("&nbsp;&nbsp;skills&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Technological framework deck list");
-                printLine("&nbsp;&nbsp;resume&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Render document package in iframe terminal");
-                printLine("&nbsp;&nbsp;download&nbsp;&nbsp;&nbsp;&nbsp;- Download resume PDF payload");
-                printLine("&nbsp;&nbsp;matrix&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Config bg canvas color [green/cyan/red/purple]");
-                printLine("&nbsp;&nbsp;clear&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Wipe terminal window stdout logs");
-                printLine("&nbsp;&nbsp;exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Kill current interactive console shell");
+                printTermLine("Terminal Shell Instruction Registry:", "t-green");
+                printTermLine("&nbsp;&nbsp;about&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- General info about Samad Shaikh");
+                printTermLine("&nbsp;&nbsp;skills&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Core framework developer deck list");
+                printTermLine("&nbsp;&nbsp;resume&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Decrypt & render resume inside this terminal screen");
+                printTermLine("&nbsp;&nbsp;download&nbsp;&nbsp;&nbsp;&nbsp;- Download resume PDF payload");
+                printTermLine("&nbsp;&nbsp;matrix&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Change background rain color [green/cyan/red/purple]");
+                printTermLine("&nbsp;&nbsp;clear&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Clear screen command outputs");
+                printTermLine("&nbsp;&nbsp;exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Shut down shell window environment");
                 break;
 
             case "about":
-                printLine("Profile Identity : Samad Shaikh", "line-green");
-                printLine("Tech Designation : Cyber Ghost / The Tech Detective", "line-cyan");
-                printLine("Specialty Area   : System Architectures, API Frameworks, Backend Microservices");
-                printLine("Operations       : Developing secure application gateways and automations.");
+                printTermLine("User Profile : Samad Shaikh", "t-green");
+                printTermLine("Designation  : Cyber Ghost / The Tech Detective", "t-cyan");
+                printTermLine("Focus Area   : Full-Stack Architect, API Designer, Integration Automator");
+                printTermLine("Mission      : Building stunning, performance-oriented backend APIs and UI frontends.");
                 break;
 
             case "skills":
-                printLine("Core Coding Languages : Node.js, Python, TypeScript, Go", "line-green");
-                printLine("Backend & APIs        : Express, FastAPI, REST, GraphQL, WebSockets", "line-cyan");
-                printLine("Databases / Caches    : PostgreSQL, MongoDB, Redis", "line-cyan");
-                printLine("Infrastructure & Ops  : Docker, AWS Cloud suite, GitHub Actions CI/CD", "line-dim");
+                printTermLine("Languages   : Node.js, Python, TypeScript, JavaScript, Go", "t-green");
+                printTermLine("Backend API : FastAPI, Express, REST, GraphQL, WebSockets", "t-cyan");
+                printTermLine("Databases   : PostgreSQL, MongoDB, Redis", "t-cyan");
+                printTermLine("Cloud/Ops   : Docker, Git, AWS Services, CI/CD Actions", "t-dim");
                 break;
 
             case "cat":
                 if (args[1] && args[1].includes("resume")) {
-                    loadResumeIframe();
+                    loadResumeViewer();
                 } else {
-                    printLine(`cat: ${args[1] || ""}: File not found. Command format: 'cat resume'`, "line-error");
+                    printTermLine(`cat: ${args[1] || ""}: File not found. Try: 'cat resume'`, "t-red");
                 }
                 break;
 
             case "resume":
-                loadResumeIframe();
+                loadResumeViewer();
                 break;
 
             case "download":
-                printLine("Requesting decryption of document file payload...", "line-green");
+                printTermLine("Downloading document packet...", "t-green");
                 setTimeout(() => {
                     window.open("https://drive.google.com/uc?export=download&id=1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi", "_blank");
                 }, 500);
@@ -277,58 +365,62 @@ document.addEventListener("DOMContentLoaded", () => {
                 const color = args[1];
                 if (color === "green") {
                     matrixColor = "#00ff66";
-                    printLine("Matrix parameter updated to NEON GREEN", "line-green");
+                    printTermLine("Matrix parameter updated to NEON GREEN", "t-green");
                 } else if (color === "cyan") {
                     matrixColor = "#00f3ff";
-                    printLine("Matrix parameter updated to NEON CYAN", "line-cyan");
+                    printTermLine("Matrix parameter updated to NEON CYAN", "t-cyan");
                 } else if (color === "red") {
                     matrixColor = "#ff0055";
-                    printLine("Matrix parameter updated to ALERT RED", "line-error");
+                    printTermLine("Matrix parameter updated to WARNING RED", "t-red");
                 } else if (color === "purple") {
                     matrixColor = "#af40ff";
-                    printLine("Matrix parameter updated to SPECTRAL PURPLE", "line-cyan");
+                    printTermLine("Matrix parameter updated to SPECTRAL PURPLE", "t-cyan");
                 } else {
-                    printLine("matrix: Parameter mismatch. Use green / cyan / red / purple", "line-error");
+                    printTermLine("matrix: Parameter mismatch. Use green / cyan / red / purple", "t-red");
                 }
                 break;
 
             case "clear":
-                clearLogs();
+                clearTermLogs();
                 break;
 
             case "exit":
-                printLine("Killing terminal process...", "line-error");
-                setTimeout(closeTerminal, 600);
+                printTermLine("Exiting terminal context...", "t-red");
+                setTimeout(() => closeWindow("win-terminal"), 500);
                 break;
 
             default:
-                printLine(`shell: Unknown instruction: '${cmd}'. Write 'help' for support.`, "line-error");
+                printTermLine(`shell: Unknown command '${cmd}'. Type 'help' for support.`, "t-red");
         }
 
-        terminalBody.scrollTop = terminalBody.scrollHeight;
+        termBody.scrollTop = termBody.scrollHeight;
     };
 
-    const loadResumeIframe = () => {
-        printLine("Initializing secure decryption layer for resume frame...", "line-cyan");
-        embedContainer.style.display = "block";
-        iframeLoader.style.opacity = "1";
-        iframeLoader.style.display = "flex";
+    const loadResumeViewer = () => {
+        printTermLine("Initializing secure decryption layer for PDF display...", "t-cyan");
+        pdfContainer.style.display = "block";
+        pdfLoader.style.opacity = "1";
+        pdfLoader.style.display = "flex";
         
-        // Secure preview link without sandbox block
-        embedIframe.src = "https://drive.google.com/file/d/1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi/preview";
+        pdfIframe.src = "https://drive.google.com/file/d/1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi/preview";
 
-        embedIframe.onload = () => {
-            iframeLoader.style.opacity = "0";
+        pdfIframe.onload = () => {
+            pdfLoader.style.opacity = "0";
             setTimeout(() => {
-                iframeLoader.style.display = "none";
+                pdfLoader.style.display = "none";
             }, 400);
-            printLine("Payload decoded. Resume rendered in workspace panel.", "line-green");
+            printTermLine("File decoded. Resume rendered in terminal window viewport.", "t-green");
         };
 
-        // Standby link injection in case of cross-origin blocks
+        // Fallback option in case of browser frame security blocks
         setTimeout(() => {
-            printLine("Did your browser block the Google Drive cookie frame?", "line-dim");
-            printLine("<a href='https://drive.google.com/file/d/1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi/view?usp=sharing' target='_blank' style='color:#00f3ff; text-decoration:underline;'>[Decrypt & open PDF in a new workspace window]</a>", "line-cyan");
-        }, 1200);
+            printTermLine("Did your browser block the Google Drive preview?", "t-dim");
+            printTermLine("<a href='https://drive.google.com/file/d/1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi/view?usp=sharing' target='_blank' style='color:#00f3ff; text-decoration:underline;'>[Click here to decrypt and view in a separate tab]</a>", "t-cyan");
+        }, 1500);
     };
+
+    // Auto-launch Profile window on load to welcome users
+    setTimeout(() => {
+        openWindow("win-profile");
+    }, 800);
 });
