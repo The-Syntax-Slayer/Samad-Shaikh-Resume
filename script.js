@@ -1,9 +1,9 @@
-// GHOST-OS v1.0.8 - Virtual Desktop Interface Logic
+// Cyber Portal Gateway - Dashboard Logic
 // Designed for Samad Shaikh
 
 document.addEventListener("DOMContentLoaded", () => {
     // ----------------------------------------------------
-    // MATRIX RAIN BACKGROUND CONFIGS
+    // MATRIX RAIN BACKGROUND ENGINE
     // ----------------------------------------------------
     const canvas = document.getElementById("matrix-canvas");
     const ctx = canvas.getContext("2d");
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    const charList = "ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ<>[]{}*#@$%";
+    const charList = "ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ<>[#]$%";
     const alphabet = charList.split("");
 
     const fontSize = 14;
@@ -23,10 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let matrixColor = "#00ff66";
-    let speed = 25;
 
     const drawMatrix = () => {
-        ctx.fillStyle = "rgba(1, 3, 7, 0.08)";
+        ctx.fillStyle = "rgba(2, 5, 10, 0.08)";
         ctx.fillRect(0, 0, width, height);
 
         ctx.fillStyle = matrixColor;
@@ -43,13 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    let matrixInterval = setInterval(drawMatrix, speed);
-
-    const updateMatrixSpeed = (newSpeed) => {
-        clearInterval(matrixInterval);
-        speed = newSpeed;
-        matrixInterval = setInterval(drawMatrix, speed);
-    };
+    let matrixInterval = setInterval(drawMatrix, 30);
 
     window.addEventListener("resize", () => {
         width = canvas.width = window.innerWidth;
@@ -63,188 +56,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // WINDOW FOCUS & STACK MANAGER
+    // ENCODED DYNAMIC PROFILE SCANNER (HEX EFFECT)
     // ----------------------------------------------------
-    const windows = document.querySelectorAll(".window");
-    const taskbarIcons = document.querySelectorAll(".tb-icon");
+    const hexStream = document.getElementById("hex-stream");
+    const decodedView = document.getElementById("decoded-view");
 
-    const focusWindow = (targetWin) => {
-        windows.forEach(win => {
-            win.classList.remove("focused");
-        });
-        targetWin.classList.add("focused");
+    // Hex representation of "Samad Shaikh - The Tech Detective"
+    const hexString = "53 61 6d 61 64 20 53 68 61 69 6b 68 20 2d 20 54 68 65 20 54 65 63 68 20 44 65 74 65 63 74 69 76 65";
+    const decodedText = "Samad Shaikh // Developer // The Tech Detective";
+
+    let decrypting = false;
+
+    const decryptHex = async () => {
+        if (decrypting) return;
+        decrypting = true;
         
-        // Sync taskbar active highlights
-        const winId = targetWin.id;
-        taskbarIcons.forEach(icon => {
-            if (icon.getAttribute("data-window") === winId) {
-                icon.classList.add("active");
-            } else {
-                // If the target window is open, keep other active icons highlighted too
-                const referencedWin = document.getElementById(icon.getAttribute("data-window"));
-                if (referencedWin && referencedWin.classList.contains("open")) {
-                    icon.classList.add("active");
-                } else {
-                    icon.classList.remove("active");
-                }
-            }
-        });
-    };
+        decodedView.innerHTML = `<span style="color:#00f3ff;">[DECRYPTING LOGS...]</span>`;
+        await new Promise(resolve => setTimeout(resolve, 800));
 
-    // Attach click events on windows to trigger focus
-    windows.forEach(win => {
-        win.addEventListener("mousedown", () => {
-            focusWindow(win);
-        });
-    });
+        let currentStr = "";
+        const parts = decodedText.split(" ");
 
-
-    // ----------------------------------------------------
-    // LAUNCHERS / CONTROLLERS / SHUTDOWN
-    // ----------------------------------------------------
-    const openWindow = (winId) => {
-        const win = document.getElementById(winId);
-        if (win) {
-            win.classList.add("open");
-            focusWindow(win);
-            
-            // If opening terminal, trigger auto-typing sequence
-            if (winId === "win-terminal") {
-                triggerTerminalBoot();
-            }
+        decodedView.innerHTML = "";
+        for (let i = 0; i < parts.length; i++) {
+            currentStr += parts[i] + " ";
+            decodedView.innerHTML = `<span style="color:#00ff66;">&gt; ${currentStr}</span><span class="cursor-flash" style="background:#00ff66; width:6px; height:12px; display:inline-block; margin-left:4px;"></span>`;
+            await new Promise(resolve => setTimeout(resolve, 150));
         }
+
+        // Remove cursor
+        const cursor = decodedView.querySelector(".cursor-flash");
+        if (cursor) cursor.remove();
+        
+        decrypting = false;
     };
 
-    const closeWindow = (winId) => {
-        const win = document.getElementById(winId);
-        if (win) {
-            win.classList.remove("open");
-            win.classList.remove("focused");
-            
-            // Sync taskbar icon
-            const icon = document.querySelector(`.tb-icon[data-window="${winId}"]`);
-            if (icon) icon.classList.remove("active");
-
-            // Stop terminal frame loading if closing terminal
-            if (winId === "win-terminal") {
-                document.getElementById("resume-iframe").src = "";
-                document.getElementById("resume-embed-container").style.display = "none";
-            }
-        }
-    };
-
-    // Desktop icons click
-    const desktopIcons = document.querySelectorAll(".desktop-icon");
-    desktopIcons.forEach(icon => {
-        icon.addEventListener("click", () => {
-            const targetWin = icon.getAttribute("data-window");
-            openWindow(targetWin);
-        });
-    });
-
-    // Window controls dots (Close button)
-    const closeButtons = document.querySelectorAll(".win-close");
-    closeButtons.forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const win = btn.closest(".window");
-            if (win) closeWindow(win.id);
-        });
-    });
-
-    // Window controls minimize button
-    const minButtons = document.querySelectorAll(".win-min");
-    minButtons.forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const win = btn.closest(".window");
-            if (win) closeWindow(win.id);
-        });
-    });
-
-    // Taskbar icons quick launch / togglers
-    taskbarIcons.forEach(icon => {
-        icon.addEventListener("click", () => {
-            const targetWinId = icon.getAttribute("data-window");
-            const win = document.getElementById(targetWinId);
-            
-            if (win) {
-                if (win.classList.contains("open")) {
-                    if (win.classList.contains("focused")) {
-                        closeWindow(targetWinId); // Minimize if open and focused
-                    } else {
-                        focusWindow(win); // Bring to front if open but backgrounded
-                    }
-                } else {
-                    openWindow(targetWinId); // Launch if closed
-                }
-            }
-        });
-    });
-
-    // Start Menu toggler (Open all system files)
-    const startBtn = document.getElementById("start-btn");
-    startBtn.addEventListener("click", () => {
-        openWindow("win-profile");
-    });
-
-
-    // ----------------------------------------------------
-    // SETTINGS CONTROL DESKTOP PANEL
-    // ----------------------------------------------------
-    const cfgGreen = document.getElementById("cfg-green");
-    const cfgCyan = document.getElementById("cfg-cyan");
-    const cfgRed = document.getElementById("cfg-red");
-    const cfgPurple = document.getElementById("cfg-purple");
-    const cfgSpeedFast = document.getElementById("cfg-speed-fast");
-    const cfgSpeedNormal = document.getElementById("cfg-speed-normal");
-
-    if (cfgGreen) {
-        cfgGreen.addEventListener("click", () => {
-            matrixColor = "#00ff66";
-            printTermLine("Matrix theme set to GREEN", "t-green");
-        });
-    }
-    if (cfgCyan) {
-        cfgCyan.addEventListener("click", () => {
-            matrixColor = "#00f3ff";
-            printTermLine("Matrix theme set to CYAN", "t-cyan");
-        });
-    }
-    if (cfgRed) {
-        cfgRed.addEventListener("click", () => {
-            matrixColor = "#ff0055";
-            printTermLine("Matrix theme set to RED", "t-red");
-        });
-    }
-    if (cfgPurple) {
-        cfgPurple.addEventListener("click", () => {
-            matrixColor = "#af40ff";
-            printTermLine("Matrix theme set to PURPLE", "t-cyan");
-        });
-    }
-    if (cfgSpeedFast) {
-        cfgSpeedFast.addEventListener("click", () => {
-            updateMatrixSpeed(15);
-            printTermLine("Rain drop acceleration active (15ms sleep delay)", "t-green");
-        });
-    }
-    if (cfgSpeedNormal) {
-        cfgSpeedNormal.addEventListener("click", () => {
-            updateMatrixSpeed(35);
-            printTermLine("Rain drop acceleration normal (35ms sleep delay)", "t-dim");
-        });
+    if (hexStream) {
+        hexStream.addEventListener("mouseenter", decryptHex);
+        hexStream.addEventListener("touchstart", decryptHex);
+        
+        // Auto run once shortly after load to draw attention
+        setTimeout(decryptHex, 2000);
     }
 
 
     // ----------------------------------------------------
-    // SYSTEM TASKBAR CLOCK WORKSPACE
+    // SYSTEM DATE/TIME HEADER TELEMETRY
     // ----------------------------------------------------
-    const tbTime = document.getElementById("tb-time");
+    const headerTime = document.getElementById("header-time");
     const updateTime = () => {
-        if (tbTime) {
+        if (headerTime) {
             const now = new Date();
-            tbTime.textContent = now.toLocaleDateString() + " // " + now.toLocaleTimeString();
+            headerTime.textContent = now.toLocaleDateString() + " // " + now.toLocaleTimeString();
         }
     };
     setInterval(updateTime, 1000);
@@ -252,14 +115,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ----------------------------------------------------
-    // INTERACTIVE SHELL LOGIC (RESUME PANEL)
+    // TERMINAL RESUME SHELL INTERFACE
     // ----------------------------------------------------
+    const viewBtn = document.getElementById("view-resume-btn");
+    const termBlock = document.getElementById("terminal-block");
+    const closeDot = document.getElementById("terminal-close");
+    const termLogs = document.getElementById("terminal-logs");
     const termBody = document.getElementById("term-body");
-    const termLogs = document.getElementById("term-logs");
     const termInput = document.getElementById("term-input");
-    const pdfContainer = document.getElementById("pdf-viewer-panel");
+    const pdfBox = document.getElementById("pdf-viewer-box");
     const pdfIframe = document.getElementById("pdf-iframe");
     const pdfLoader = document.getElementById("pdf-loader");
+
+    let shellActive = false;
 
     const simulateTyping = async (text, delay = 50) => {
         termInput.disabled = true;
@@ -271,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
         termInput.disabled = false;
     };
 
-    const printTermLine = (text, className = "") => {
+    const printLine = (text, className = "") => {
         const p = document.createElement("p");
         p.className = className;
         p.innerHTML = text;
@@ -279,83 +147,102 @@ document.addEventListener("DOMContentLoaded", () => {
         termBody.scrollTop = termBody.scrollHeight;
     };
 
-    const clearTermLogs = () => {
+    const clearLogs = () => {
         termLogs.innerHTML = "";
-        pdfContainer.style.display = "none";
+        pdfBox.style.display = "none";
     };
 
-    const triggerTerminalBoot = async () => {
-        clearTermLogs();
-        printTermLine(`[BOOT] INITIALIZING SECURE SHELL SYSTEM v2.0...`, "t-cyan");
+    // Open & Boot Terminal
+    viewBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        
+        termBlock.style.display = "block";
+        shellActive = true;
+        clearLogs();
+        
+        // Smooth scroll to terminal view
+        termBlock.scrollIntoView({ behavior: "smooth" });
+
+        printLine(`[CONNECTING] Requesting secure access handshake...`, "l-cyan");
         await new Promise(resolve => setTimeout(resolve, 500));
         
-        printTermLine(`[SUCCESS] Authorized decrypt handshake: samadshaikh.me secure portal link active.`, "t-green");
-        printTermLine(`Platform: GHOST-OS-v1 // Security Level: Secure-G2`, "t-dim");
-        printTermLine(`------------------------------------------------------------------`, "t-dim");
-        printTermLine(`guest@cyberghost:~$`, "t-cyan");
+        printLine(`[AUTHORIZED] Gateway link active. Decrypt module online.`, "l-green");
+        printLine(`Host: samadshaikh.me // Decryption Key: SEC-A221`, "l-dim");
+        printLine(`------------------------------------------------------------------`, "l-dim");
+        printLine(`guest@cyberghost:~$`, "l-cyan");
         
+        // Sim writing view command
         await simulateTyping("cat resume_samad_shaikh.pdf", 45);
         
-        handleShellCommand("cat resume_samad_shaikh.pdf");
+        handleCommand("cat resume_samad_shaikh.pdf");
         termInput.value = "";
         termInput.focus();
+    });
+
+    const closeTerminal = () => {
+        termBlock.style.display = "none";
+        shellActive = false;
+        pdfIframe.src = "";
+        pdfBox.style.display = "none";
     };
+
+    closeDot.addEventListener("click", closeTerminal);
 
     termInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
             const val = termInput.value.trim();
             if (val) {
-                printTermLine(`guest@cyberghost:~$ ${val}`, "t-cyan");
-                handleShellCommand(val.toLowerCase());
+                printLine(`guest@cyberghost:~$ ${val}`, "l-cyan");
+                handleCommand(val.toLowerCase());
             }
             termInput.value = "";
         }
     });
 
-    const handleShellCommand = (cmd) => {
+    const handleCommand = (cmd) => {
         const args = cmd.split(" ");
         const base = args[0];
 
         switch (base) {
             case "help":
-                printTermLine("Terminal Shell Instruction Registry:", "t-green");
-                printTermLine("&nbsp;&nbsp;about&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- General info about Samad Shaikh");
-                printTermLine("&nbsp;&nbsp;skills&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Core framework developer deck list");
-                printTermLine("&nbsp;&nbsp;resume&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Decrypt & render resume inside this terminal screen");
-                printTermLine("&nbsp;&nbsp;download&nbsp;&nbsp;&nbsp;&nbsp;- Download resume PDF payload");
-                printTermLine("&nbsp;&nbsp;matrix&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Change background rain color [green/cyan/red/purple]");
-                printTermLine("&nbsp;&nbsp;clear&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Clear screen command outputs");
-                printTermLine("&nbsp;&nbsp;exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Shut down shell window environment");
+                printLine("Terminal Shell Instruction Set:", "l-green");
+                printLine("&nbsp;&nbsp;about&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Design info about Samad Shaikh");
+                printLine("&nbsp;&nbsp;skills&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Technologies & frameworks validated");
+                printLine("&nbsp;&nbsp;resume&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Render PDF resume document inline");
+                printLine("&nbsp;&nbsp;download&nbsp;&nbsp;&nbsp;&nbsp;- Download resume PDF directly");
+                printLine("&nbsp;&nbsp;matrix&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Change background rain color [green/cyan/red/purple]");
+                printLine("&nbsp;&nbsp;clear&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Clear screen console outputs");
+                printLine("&nbsp;&nbsp;exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Shut down interactive terminal shell");
                 break;
 
             case "about":
-                printTermLine("User Profile : Samad Shaikh", "t-green");
-                printTermLine("Designation  : Cyber Ghost / The Tech Detective", "t-cyan");
-                printTermLine("Focus Area   : Full-Stack Architect, API Designer, Integration Automator");
-                printTermLine("Mission      : Building stunning, performance-oriented backend APIs and UI frontends.");
+                printLine("Profile Identity : Samad Shaikh", "l-green");
+                printLine("Tech Designation : Cyber Ghost / The Tech Detective", "l-cyan");
+                printLine("Specialization   : Scalable Backend Services, Secure API Design, System Integration");
+                printLine("Operations       : Debugging, refactoring, and optimizing codebase telemetry.");
                 break;
 
             case "skills":
-                printTermLine("Languages   : Node.js, Python, TypeScript, JavaScript, Go", "t-green");
-                printTermLine("Backend API : FastAPI, Express, REST, GraphQL, WebSockets", "t-cyan");
-                printTermLine("Databases   : PostgreSQL, MongoDB, Redis", "t-cyan");
-                printTermLine("Cloud/Ops   : Docker, Git, AWS Services, CI/CD Actions", "t-dim");
+                printLine("Core Programming  : Node.js, Python, TypeScript, Go", "l-green");
+                printLine("Backend Protocols : Express, FastAPI, REST, GraphQL, WebSockets", "l-cyan");
+                printLine("Databases & Cache : PostgreSQL, MongoDB, Redis", "l-cyan");
+                printLine("Tools & CI-CD     : Docker, Git, AWS infrastructure, Actions", "l-dim");
                 break;
 
             case "cat":
                 if (args[1] && args[1].includes("resume")) {
-                    loadResumeViewer();
+                    loadPDFViewer();
                 } else {
-                    printTermLine(`cat: ${args[1] || ""}: File not found. Try: 'cat resume'`, "t-red");
+                    printLine(`cat: ${args[1] || ""}: File not found. Try: 'cat resume'`, "l-red");
                 }
                 break;
 
             case "resume":
-                loadResumeViewer();
+                loadPDFViewer();
                 break;
 
             case "download":
-                printTermLine("Downloading document packet...", "t-green");
+                printLine("Decrypting and requesting file payload packet...", "l-green");
                 setTimeout(() => {
                     window.open("https://drive.google.com/uc?export=download&id=1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi", "_blank");
                 }, 500);
@@ -365,40 +252,40 @@ document.addEventListener("DOMContentLoaded", () => {
                 const color = args[1];
                 if (color === "green") {
                     matrixColor = "#00ff66";
-                    printTermLine("Matrix parameter updated to NEON GREEN", "t-green");
+                    printLine("Matrix parameter updated to NEON GREEN", "l-green");
                 } else if (color === "cyan") {
                     matrixColor = "#00f3ff";
-                    printTermLine("Matrix parameter updated to NEON CYAN", "t-cyan");
+                    printLine("Matrix parameter updated to NEON CYAN", "l-cyan");
                 } else if (color === "red") {
                     matrixColor = "#ff0055";
-                    printTermLine("Matrix parameter updated to WARNING RED", "t-red");
+                    printLine("Matrix parameter updated to WARNING RED", "l-red");
                 } else if (color === "purple") {
                     matrixColor = "#af40ff";
-                    printTermLine("Matrix parameter updated to SPECTRAL PURPLE", "t-cyan");
+                    printLine("Matrix parameter updated to SPECTRAL PURPLE", "l-cyan");
                 } else {
-                    printTermLine("matrix: Parameter mismatch. Use green / cyan / red / purple", "t-red");
+                    printLine("matrix: Parameter mismatch. Use green / cyan / red / purple", "l-red");
                 }
                 break;
 
             case "clear":
-                clearTermLogs();
+                clearLogs();
                 break;
 
             case "exit":
-                printTermLine("Exiting terminal context...", "t-red");
-                setTimeout(() => closeWindow("win-terminal"), 500);
+                printLine("Terminating gateway shell...", "l-red");
+                setTimeout(closeTerminal, 500);
                 break;
 
             default:
-                printTermLine(`shell: Unknown command '${cmd}'. Type 'help' for support.`, "t-red");
+                printLine(`shell: Instructions unmapped: '${cmd}'. Write 'help' for support.`, "l-red");
         }
 
         termBody.scrollTop = termBody.scrollHeight;
     };
 
-    const loadResumeViewer = () => {
-        printTermLine("Initializing secure decryption layer for PDF display...", "t-cyan");
-        pdfContainer.style.display = "block";
+    const loadPDFViewer = () => {
+        printLine("Initializing decryption tunnel for resume frame...", "l-cyan");
+        pdfBox.style.display = "block";
         pdfLoader.style.opacity = "1";
         pdfLoader.style.display = "flex";
         
@@ -409,18 +296,13 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 pdfLoader.style.display = "none";
             }, 400);
-            printTermLine("File decoded. Resume rendered in terminal window viewport.", "t-green");
+            printLine("Payload decoded. Resume rendered in portal workspace.", "l-green");
         };
 
-        // Fallback option in case of browser frame security blocks
+        // Standard link backup in case of cookie iframe blocks
         setTimeout(() => {
-            printTermLine("Did your browser block the Google Drive preview?", "t-dim");
-            printTermLine("<a href='https://drive.google.com/file/d/1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi/view?usp=sharing' target='_blank' style='color:#00f3ff; text-decoration:underline;'>[Click here to decrypt and view in a separate tab]</a>", "t-cyan");
+            printLine("Did your browser block the Google Drive cookie panel?", "l-dim");
+            printLine("<a href='https://drive.google.com/file/d/1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi/view?usp=sharing' target='_blank' style='color:#00f3ff; text-decoration:underline;'>[Click here to decrypt and open in a new workspace window]</a>", "l-cyan");
         }, 1500);
     };
-
-    // Auto-launch Profile window on load to welcome users
-    setTimeout(() => {
-        openWindow("win-profile");
-    }, 800);
 });

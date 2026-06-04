@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samad Shaikh - GHOST-OS v1.0.8</title>
-    <meta name="description" content="GHOST-OS v1.0.8 secure workstation. Inspect the professional CV and projects of Samad Shaikh.">
+    <title>Samad Shaikh - Portal Access</title>
+    <meta name="description" content="Cyber Ghost secure gateway. Access the professional CV and technological profile of Samad Shaikh.">
     <link rel="icon" type="image/png" href="profile.png">
     
-    <!-- Link OS Stylesheet -->
+    <!-- Link Portal Stylesheet -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Load OS Logic -->
+    <!-- Load Interactive Portal Engine -->
     <script defer src="script.js"></script>
 </head>
 <body>
@@ -21,297 +21,133 @@
     <!-- Scanline background overlay -->
     <div class="scanlines"></div>
 
-    <!-- DESKTOP SHORTCUT AREA -->
-    <main class="desktop-area">
+    <!-- PORTAL CONTAINER -->
+    <div class="portal-container">
         
-        <!-- Icon 1: Profile -->
-        <button class="desktop-icon" data-window="win-profile" aria-label="Open profile file">
-            <!-- Neon Profile SVG Icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <circle cx="10" cy="13" r="2"></circle>
-                <path d="M14 17a4 4 0 0 0-8 0"></path>
-            </svg>
-            <span>profile.sys</span>
-        </button>
-
-        <!-- Icon 2: Projects -->
-        <button class="desktop-icon" data-window="win-projects" aria-label="Open projects file">
-            <!-- Folder SVG Icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-            </svg>
-            <span>projects.log</span>
-        </button>
-
-        <!-- Icon 3: Terminal Resume -->
-        <button class="desktop-icon" data-window="win-terminal" aria-label="Open resume executable">
-            <!-- Binary Terminal Executable SVG Icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="2" y1="10" x2="22" y2="10"></line>
-                <polyline points="5 6 7 8 5 10"></polyline>
-                <line x1="10" y1="8" x2="16" y2="8"></line>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-            </svg>
-            <span>resume.bin</span>
-        </button>
-
-        <!-- Icon 4: OS Settings -->
-        <button class="desktop-icon" data-window="win-config" aria-label="Open system configuration settings">
-            <!-- Settings Gear SVG Icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
-            <span>settings.cfg</span>
-        </button>
-
-    </main>
-
-    <!-- FLOATING GLASS WINDOW STACK -->
-
-    <!-- WINDOW 1: IDENTITY PROFILE -->
-    <div id="win-profile" class="window">
-        <div class="window-header">
-            <div class="win-controls">
-                <div class="win-dot win-close" title="Close"></div>
-                <div class="win-dot win-min" title="Minimize"></div>
-                <div class="win-dot win-max" title="Maximize"></div>
+        <!-- Portal Header -->
+        <header class="portal-header">
+            <div class="logo-block">
+                <div class="status-dot"></div>
+                <h1 class="header-text">GHOST_PORTAL v1.0.8</h1>
             </div>
-            <div class="win-title">profile.sys - Identity Log</div>
-            <div style="width: 50px;"></div>
-        </div>
-        <div class="window-body">
-            <div class="profile-wrap">
-                <div class="avatar-circle">
-                    <div class="avatar-border"></div>
-                    <div class="avatar-scanner"></div>
-                    <img src="profile.png" alt="Samad Shaikh" class="avatar-photo">
-                </div>
-                <h2 class="user-name">Samad Shaikh</h2>
-                <div class="user-tagline">CYBER GHOST / THE TECH DETECTIVE</div>
-                
-                <p class="bio-text">
-                    I craft performance-oriented backend APIs, build interactive cyberpunk frontend platforms, and construct automated CI/CD integration pipelines. Specialized in backend architectures with node environment diagnostics and reverse-engineering frameworks.
-                </p>
-
-                <div class="contact-grid">
-                    <div class="contact-row">
-                        <span class="contact-lbl">LOCATION:</span>
-                        <span class="contact-val">MUMBAI, IN</span>
-                    </div>
-                    <div class="contact-row">
-                        <span class="contact-lbl">GITHUB:</span>
-                        <span class="contact-val"><a href="https://github.com/The-Syntax-Slayer" target="_blank" rel="noopener noreferrer">The-Syntax-Slayer</a></span>
-                    </div>
-                    <div class="contact-row">
-                        <span class="contact-lbl">EMAIL:</span>
-                        <span class="contact-val"><a href="mailto:samad.shaikh.developer@gmail.com">samad.shaikh.developer@gmail.com</a></span>
-                    </div>
-                    <div class="contact-row">
-                        <span class="contact-lbl">SYS STATUS:</span>
-                        <span class="contact-val" style="color: #00ff66; font-weight: bold;">ACTIVE / ACCESSIBLE</span>
-                    </div>
-                </div>
+            <div class="sys-telemetry">
+                <span>GATEWAY: <strong>ONLINE</strong></span> // 
+                <span id="header-time">INIT...</span>
             </div>
-        </div>
-    </div>
+        </header>
 
-    <!-- WINDOW 2: PROJECTS DIRECTORY -->
-    <div id="win-projects" class="window">
-        <div class="window-header">
-            <div class="win-controls">
-                <div class="win-dot win-close" title="Close"></div>
-                <div class="win-dot win-min" title="Minimize"></div>
-                <div class="win-dot win-max" title="Maximize"></div>
-            </div>
-            <div class="win-title">projects.log - Folder Index</div>
-            <div style="width: 50px;"></div>
-        </div>
-        <div class="window-body">
-            <div class="projects-deck">
-                
-                <!-- Project 1 -->
-                <div class="project-card">
-                    <h3 class="p-title">MockMate-AI</h3>
-                    <p class="p-desc">Generative AI interface mimicking real interviews. Leverages custom parameters to scan candidate profiles and grade speech outputs.</p>
-                    <div class="p-tags">
-                        <span class="tag">TypeScript</span>
-                        <span class="tag">FastAPI</span>
-                        <span class="tag">React</span>
-                    </div>
-                    <a href="https://github.com/The-Syntax-Slayer/MockMate-AI" class="p-link" target="_blank" rel="noopener noreferrer">
-                        Access Code &gt;
-                    </a>
-                </div>
-
-                <!-- Project 2 -->
-                <div class="project-card">
-                    <h3 class="p-title">Planora</h3>
-                    <p class="p-desc">Fullstack operations manager handling database logs, user permissions, task boards, and automated workflows.</p>
-                    <div class="p-tags">
-                        <span class="tag">Node.js</span>
-                        <span class="tag">PostgreSQL</span>
-                        <span class="tag">Docker</span>
-                    </div>
-                    <a href="https://github.com/The-Syntax-Slayer/Planora" class="p-link" target="_blank" rel="noopener noreferrer">
-                        Access Code &gt;
-                    </a>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="project-card">
-                    <h3 class="p-title">LegalEase</h3>
-                    <p class="p-desc">Legal document analysis engine leveraging OCR APIs to scan index details and extract key contractual dates.</p>
-                    <div class="p-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">OpenCV</span>
-                        <span class="tag">MongoDB</span>
-                    </div>
-                    <a href="https://github.com/The-Syntax-Slayer/LegalEase" class="p-link" target="_blank" rel="noopener noreferrer">
-                        Access Code &gt;
-                    </a>
-                </div>
-
-                <!-- Project 4 -->
-                <div class="project-card">
-                    <h3 class="p-title">WebLens</h3>
-                    <p class="p-desc">Real-time network security diagnostics visualizer rendering live payload handshakes and routing mappings.</p>
-                    <div class="p-tags">
-                        <span class="tag">Go</span>
-                        <span class="tag">WebSockets</span>
-                        <span class="tag">CSS Grid</span>
-                    </div>
-                    <a href="https://github.com/The-Syntax-Slayer/WebLens" class="p-link" target="_blank" rel="noopener noreferrer">
-                        Access Code &gt;
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- WINDOW 3: SECURE TERMINAL (RESUME PAYLOAD) -->
-    <div id="win-terminal" class="window">
-        <div class="window-header">
-            <div class="win-controls">
-                <div class="win-dot win-close" title="Close"></div>
-                <div class="win-dot win-min" title="Minimize"></div>
-                <div class="win-dot win-max" title="Maximize"></div>
-            </div>
-            <div class="win-title">resume.bin - Terminal Shell</div>
-            <div style="width: 50px;"></div>
-        </div>
-        <div class="window-body" style="padding: 0;">
-            <div class="terminal-shell">
-                <div id="term-body" class="term-body">
-                    
-                    <!-- Decryption log feed -->
-                    <div id="term-logs"></div>
-
-                    <!-- PDF Render Frame -->
-                    <div id="pdf-viewer-panel" class="pdf-viewer-panel">
-                        <div id="pdf-loader" class="pdf-loader">
-                            <div class="pdf-spinner"></div>
-                            <div class="pdf-loader-txt">DECRYPTING PAYLOAD MODULE...</div>
-                        </div>
-                        <iframe id="pdf-iframe" class="pdf-iframe" src=""></iframe>
-                    </div>
-
-                    <!-- Prompt input row -->
-                    <div class="term-input-line">
-                        <span class="term-prompt">guest@cyberghost:~$</span>
-                        <input type="text" id="term-input" class="term-input" autocomplete="off" placeholder="Type 'help' for protocol list...">
-                        <span class="term-cursor"></span>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- WINDOW 4: SYSTEM CONFIGS -->
-    <div id="win-config" class="window">
-        <div class="window-header">
-            <div class="win-controls">
-                <div class="win-dot win-close" title="Close"></div>
-                <div class="win-dot win-min" title="Minimize"></div>
-                <div class="win-dot win-max" title="Maximize"></div>
-            </div>
-            <div class="win-title">settings.cfg - OS Settings</div>
-            <div style="width: 50px;"></div>
-        </div>
-        <div class="window-body">
-            <div class="settings-wrap">
-                
-                <!-- Parameter 1: Matrix Color -->
-                <div class="cfg-section">
-                    <div class="cfg-title">Change Workspace Theme Color</div>
-                    <div class="cfg-btn-group">
-                        <button id="cfg-green" class="cfg-btn">Neon Green</button>
-                        <button id="cfg-cyan" class="cfg-btn cfg-btn-cyan">Neon Cyan</button>
-                        <button id="cfg-red" class="cfg-btn" style="border-color:#ff0055; color:#ff0055;">Warning Red</button>
-                        <button id="cfg-purple" class="cfg-btn" style="border-color:#af40ff; color:#af40ff;">Spectral Purple</button>
-                    </div>
-                </div>
-
-                <!-- Parameter 2: Matrix Density/Speed -->
-                <div class="cfg-section">
-                    <div class="cfg-title">Matrix Stream Frequency</div>
-                    <div class="cfg-btn-group">
-                        <button id="cfg-speed-fast" class="cfg-btn">Fast Sweep</button>
-                        <button id="cfg-speed-normal" class="cfg-btn">Standard Sweep</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- BOTTOM TASKBAR / WORKSPACE MANAGER -->
-    <footer class="taskbar">
-        <div class="taskbar-left">
-            <button id="start-btn" class="start-btn">GHOST-OS</button>
+        <!-- DASHBOARD CONTAINER -->
+        <div class="dashboard-grid">
             
-            <!-- Quick launch dock mapping -->
-            <div class="tb-shortcuts">
-                <button class="tb-icon" data-window="win-profile" title="Identity File (profile.sys)">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <circle cx="10" cy="13" r="2"></circle>
-                        <path d="M14 17a4 4 0 0 0-8 0"></path>
-                    </svg>
-                </button>
-                <button class="tb-icon" data-window="win-projects" title="Projects Index (projects.log)">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                </button>
-                <button class="tb-icon" data-window="win-terminal" title="Resume Terminal (resume.bin)">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                        <line x1="2" y1="10" x2="22" y2="10"></line>
-                        <polyline points="5 6 7 8 5 10"></polyline>
-                        <line x1="10" y1="8" x2="16" y2="8"></line>
-                    </svg>
-                </button>
-                <button class="tb-icon" data-window="win-config" title="OS Settings (settings.cfg)">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
-                </button>
+            <!-- LEFT PANEL: Classified Profile -->
+            <div class="portal-card">
+                <div class="card-corner-tl"></div>
+                <div class="card-corner-br"></div>
+                
+                <div class="profile-panel">
+                    <!-- Scanner Avatar Frame -->
+                    <div class="avatar-scanner">
+                        <div class="scanner-ring"></div>
+                        <div class="scanner-beam"></div>
+                        <img src="profile.png" alt="Samad Shaikh" class="avatar-photo">
+                    </div>
+                    <h2 class="profile-name">Samad Shaikh</h2>
+                    <div class="profile-tagline">CYBER GHOST / THE TECH DETECTIVE</div>
+                    
+                    <!-- Encoded Telemetry Block -->
+                    <div class="encoded-box">
+                        <div class="encoded-header">Hex Telemetry [Hover to Decode]</div>
+                        <div id="hex-stream" class="hex-stream">
+                            53 61 6d 61 64 20 53 68 61 69 6b 68 20 2d 20 54 68 65 20 54 65 63 68 20 44 65 74 65 63 74 69 76 65
+                        </div>
+                        <div id="decoded-view" class="decoded-view">
+                            &gt; Hover over telemetry hex data streams...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: Primary Action Controls -->
+            <div class="action-deck">
+                
+                <!-- Action 1: Interactive Viewer -->
+                <div class="portal-card portal-card-cyan">
+                    <div class="card-corner-tl"></div>
+                    <div class="card-corner-br"></div>
+                    
+                    <button id="view-resume-btn" class="action-panel" style="background:none; border:none; width:100%; font-family:inherit; outline:none;" aria-label="Decrypt and view resume inside the shell">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00f3ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="4 17 10 11 4 5"></polyline>
+                            <line x1="12" y1="19" x2="20" y2="19"></line>
+                        </svg>
+                        <div class="action-text">
+                            <div class="action-title" style="color:#00f3ff; text-shadow:0 0 5px rgba(0,243,255,0.4);">View Resume Shell</div>
+                            <div class="action-desc">Decrypt and view the CV document inline inside the terminal workspace.</div>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Action 2: Direct Download -->
+                <div class="portal-card">
+                    <div class="card-corner-tl"></div>
+                    <div class="card-corner-br"></div>
+                    
+                    <a href="https://drive.google.com/uc?export=download&id=1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi" class="action-panel" aria-label="Download resume PDF document payload">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <div class="action-text">
+                            <div class="action-title">Download PDF Payload</div>
+                            <div class="action-desc">Trigger direct download packet for the official PDF resume document.</div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- BOTTOM PANEL: Interactive Shell Terminal (Slides Down on view click) -->
+        <div id="terminal-block" class="terminal-block">
+            <div class="terminal-shell">
+                
+                <div class="terminal-top">
+                    <div class="terminal-dots">
+                        <div id="terminal-close" class="term-dot dot-red" title="Close Shell"></div>
+                        <div class="term-dot dot-yellow"></div>
+                        <div class="term-dot dot-green"></div>
+                    </div>
+                    <div class="terminal-title-text">guest@cyberghost: ~ (sh)</div>
+                    <div style="width: 50px;"></div> <!-- Spacer -->
+                </div>
+
+                <div id="term-body" class="terminal-logs-body">
+                    <!-- Dynamic CLI Log Outputs -->
+                    <div id="terminal-logs"></div>
+
+                    <!-- Decrypted PDF Viewport -->
+                    <div id="pdf-viewer-box" class="pdf-viewer-box">
+                        <div id="pdf-loader" class="decryption-loader">
+                            <div class="loader-spinner"></div>
+                            <div class="loader-label">DECRYPTING PAYLOAD CORE MODULE...</div>
+                        </div>
+                        <iframe id="pdf-iframe" class="pdf-doc-iframe" src=""></iframe>
+                    </div>
+
+                    <!-- Prompt Input Row -->
+                    <div class="term-input-prompt">
+                        <span class="input-prompt-label">guest@cyberghost:~$</span>
+                        <input type="text" id="term-input" class="input-prompt-field" autocomplete="off" placeholder="Type 'help' for protocol list...">
+                        <span class="cursor-flash"></span>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div class="taskbar-right">
-            <span>SYS: <strong>NOMINAL</strong></span>
-            <span>IP: <strong>SECURED</strong></span>
-            <span id="tb-time">INIT...</span>
-        </div>
-    </footer>
+
+    </div>
 
 </body>
 </html>
