@@ -585,7 +585,11 @@ body::after {
         font-size: 16px;
     }
 
-    .pdf-viewer-box {
-        height: 60vh;
+    #pdf-viewer-box.pdf-viewer-box {
+        height: 500px !important;
+        min-height: 500px !important;
+    }
+    #pdf-iframe.pdf-doc-iframe {
+        min-height: 500px !important;
     }
 }
