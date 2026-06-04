@@ -61,39 +61,56 @@ document.addEventListener("DOMContentLoaded", () => {
     const hexStream = document.getElementById("hex-stream");
     const decodedView = document.getElementById("decoded-view");
 
-    // Hex representation of "Samad Shaikh - The Tech Detective"
-    const hexString = "53 61 6d 61 64 20 53 68 61 69 6b 68 20 2d 20 54 68 65 20 54 65 63 68 20 44 65 74 65 63 74 69 76 65";
-    const decodedText = "Samad Shaikh // Developer // The Tech Detective";
+    // Hex representation of "In the universe of code, every bug is a clue."
+    const hexString = "49 6e 20 74 68 65 20 75 6e 69 76 65 72 73 65 20 6f 66 20 63 6f 64 65 2c 20 65 76 65 72 79 20 62 75 67 20 69 73 20 61 20 63 6c 75 65 2e";
+    const decodedText = "In the universe of code, every bug is a clue.";
 
     let decrypting = false;
+    let decrypted = false;
 
     const decryptHex = async () => {
-        if (decrypting) return;
+        if (decrypting || decrypted) return;
         decrypting = true;
         
-        decodedView.innerHTML = `<span style="color:#00f3ff;">[DECRYPTING LOGS...]</span>`;
-        await new Promise(resolve => setTimeout(resolve, 800));
+        decodedView.innerHTML = `<span style="color:#00f3ff;">[DECRYPTING...]</span>`;
+        await new Promise(resolve => setTimeout(resolve, 500));
 
         let currentStr = "";
         const parts = decodedText.split(" ");
 
         decodedView.innerHTML = "";
         for (let i = 0; i < parts.length; i++) {
+            if (!decrypting) break; // Abort if mouse left early
             currentStr += parts[i] + " ";
             decodedView.innerHTML = `<span style="color:#00ff66;">&gt; ${currentStr}</span><span class="cursor-flash" style="background:#00ff66; width:6px; height:12px; display:inline-block; margin-left:4px;"></span>`;
-            await new Promise(resolve => setTimeout(resolve, 150));
+            await new Promise(resolve => setTimeout(resolve, 100));
         }
 
-        // Remove cursor
         const cursor = decodedView.querySelector(".cursor-flash");
         if (cursor) cursor.remove();
         
+        if (decrypting) {
+            decrypted = true;
+            decrypting = false;
+        }
+    };
+
+    const resetHex = () => {
         decrypting = false;
+        decrypted = false;
+        decodedView.innerHTML = `&gt; Hover over telemetry hex data streams...`;
     };
 
     if (hexStream) {
         hexStream.addEventListener("mouseenter", decryptHex);
-        hexStream.addEventListener("touchstart", decryptHex);
+        hexStream.addEventListener("mouseleave", resetHex);
+        hexStream.addEventListener("touchstart", () => {
+            if (decrypted) {
+                resetHex();
+            } else {
+                decryptHex();
+            }
+        });
         
         // Auto run once shortly after load to draw attention
         setTimeout(decryptHex, 2000);
