@@ -339,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // On mobile (max-width: 600px), visual viewport height is 480px.
             // On larger viewports, target visual height matches container's height.
-            const targetVisualHeight = (window.innerWidth <= 600) ? 480 : 820;
+            const targetVisualHeight = (window.innerWidth <= 600) ? 480 : 580;
             pdfIframe.style.height = (targetVisualHeight / scale) + "px";
             
             pdfIframe.style.transform = `scale(${scale})`;
