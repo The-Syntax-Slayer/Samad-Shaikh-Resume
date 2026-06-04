@@ -220,7 +220,9 @@ document.addEventListener("DOMContentLoaded", () => {
         
         handleCommand("cat resume_samad_shaikh.pdf");
         termInput.value = "";
-        termInput.focus();
+        if (window.innerWidth > 600) {
+            termInput.focus();
+        }
     });
 
     const closeTerminal = () => {
