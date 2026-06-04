@@ -61,9 +61,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const hexStream = document.getElementById("hex-stream");
     const decodedView = document.getElementById("decoded-view");
 
-    // Hex representation of "In the universe of code, every bug is a clue."
-    const hexString = "49 6e 20 74 68 65 20 75 6e 69 76 65 72 73 65 20 6f 66 20 63 6f 64 65 2c 20 65 76 65 72 79 20 62 75 67 20 69 73 20 61 20 63 6c 75 65 2e";
-    const decodedText = "In the universe of code, every bug is a clue.";
+    // Dynamic hacker quotes rotation list
+    const quotes = [
+        "In the universe of code, every bug is a clue.",
+        "Slaying syntax, one compiler check at a time.",
+        "Decrypting patterns. Solving logic. Slaying syntax.",
+        "Searching for logic in a world of syntax errors.",
+        "The best error message is the one that never shows up.",
+        "Code is like humor. When you have to explain it, it is bad."
+    ];
+
+    let currentQuoteIndex = 0;
+
+    // Helper to dynamically calculate ASCII hex strings
+    const stringToHex = (str) => {
+        return str.split('').map(c => c.charCodeAt(0).toString(16)).join(' ');
+    };
 
     let decrypting = false;
     let decrypted = false;
@@ -76,7 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
         await new Promise(resolve => setTimeout(resolve, 500));
 
         let currentStr = "";
-        const parts = decodedText.split(" ");
+        const activeText = quotes[currentQuoteIndex];
+        const parts = activeText.split(" ");
 
         decodedView.innerHTML = "";
         for (let i = 0; i < parts.length; i++) {
@@ -96,12 +110,24 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const resetHex = () => {
+        const wasDecrypted = decrypted;
         decrypting = false;
         decrypted = false;
         decodedView.innerHTML = `&gt; Hover over telemetry hex data streams...`;
+
+        // If it was successfully decrypted, rotate to the next quote
+        if (wasDecrypted) {
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            if (hexStream) {
+                hexStream.textContent = stringToHex(quotes[currentQuoteIndex]);
+            }
+        }
     };
 
     if (hexStream) {
+        // Set initial hex stream dynamically on load
+        hexStream.textContent = stringToHex(quotes[currentQuoteIndex]);
+
         hexStream.addEventListener("mouseenter", decryptHex);
         hexStream.addEventListener("mouseleave", resetHex);
         hexStream.addEventListener("touchstart", () => {
