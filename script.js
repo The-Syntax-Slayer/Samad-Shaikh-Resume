@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let x = 0; x < columns; x++) {
             rainDrops[x] = Math.random() * -50;
         }
+        adjustPDFScale();
     });
 
 
@@ -326,15 +327,41 @@ document.addEventListener("DOMContentLoaded", () => {
         termBody.scrollTop = termBody.scrollHeight;
     };
 
+    function adjustPDFScale() {
+        if (!shellActive || !pdfBox || pdfBox.style.display === "none") return;
+
+        const containerWidth = pdfBox.clientWidth;
+        const baseWidth = 640; // Google Drive preview minimum clean rendering width
+
+        if (containerWidth < baseWidth && containerWidth > 0) {
+            const scale = containerWidth / baseWidth;
+            pdfIframe.style.width = baseWidth + "px";
+            
+            // On mobile (max-width: 600px), visual viewport height is 480px.
+            // On larger viewports, target visual height matches container's height.
+            const targetVisualHeight = (window.innerWidth <= 600) ? 480 : 820;
+            pdfIframe.style.height = (targetVisualHeight / scale) + "px";
+            
+            pdfIframe.style.transform = `scale(${scale})`;
+            pdfIframe.style.transformOrigin = "top left";
+        } else {
+            pdfIframe.style.width = "100%";
+            pdfIframe.style.height = "100%";
+            pdfIframe.style.transform = "none";
+        }
+    }
+
     const loadPDFViewer = () => {
         printLine("Initializing decryption tunnel for resume frame...", "l-cyan");
         pdfBox.style.display = "block";
+        adjustPDFScale();
         pdfLoader.style.opacity = "1";
         pdfLoader.style.display = "flex";
         
         pdfIframe.src = "https://drive.google.com/file/d/1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi/preview";
 
         pdfIframe.onload = () => {
+            adjustPDFScale();
             pdfLoader.style.opacity = "0";
             setTimeout(() => {
                 pdfLoader.style.display = "none";
