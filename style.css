@@ -132,11 +132,14 @@ body::after {
 }
 
 .header-text {
-    font-size: 20px;
-    font-weight: bold;
-    letter-spacing: 4px;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 5px;
     text-transform: uppercase;
-    color: var(--text-bright);
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 4px rgba(0, 243, 255, 0.4));
 }
 
 .sys-telemetry {
