@@ -3,327 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samad Shaikh - Resume</title>
-    <meta name="description" content="Access and download the professional resume of Samad Shaikh. Built with modern web standards and hosted on GitHub Pages.">
+    <title>Samad Shaikh - Terminal Access</title>
+    <meta name="description" content="Cyber Ghost secure gateway. Access the professional CV and technological profile of Samad Shaikh.">
+    <link rel="icon" type="image/png" href="profile.png">
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Link External Stylesheet -->
+    <link rel="stylesheet" href="style.css">
     
-    <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --primary-accent: #3b82f6;
-            --primary-glow: rgba(59, 130, 246, 0.15);
-            --secondary-accent: #8b5cf6;
-            --secondary-glow: rgba(139, 92, 246, 0.15);
-            --success-accent: #10b981;
-            --success-glow: rgba(16, 185, 129, 0.15);
-            --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Animated Mesh Background */
-        .bg-glow-1 {
-            position: absolute;
-            top: 20%;
-            left: 20%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(40px);
-            z-index: 1;
-            animation: float 12s infinite alternate ease-in-out;
-        }
-
-        .bg-glow-2 {
-            position: absolute;
-            bottom: 20%;
-            right: 20%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--secondary-glow) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(50px);
-            z-index: 1;
-            animation: float 16s infinite alternate-reverse ease-in-out;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                transform: translate(80px, 50px) scale(1.2);
-            }
-        }
-
-        /* Content Container */
-        .container {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 480px;
-            padding: 24px;
-            text-align: center;
-        }
-
-        /* Glassmorphic Card */
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 40px 32px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px rgba(59, 130, 246, 0.1), 0 20px 40px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Profile Section */
-        .profile-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 24px;
-        }
-
-        .avatar-ring {
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            width: 92px;
-            height: 92px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
-            opacity: 0.8;
-            animation: spin 8s linear infinite;
-        }
-
-        .avatar {
-            position: relative;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: #1e293b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid #0b0f19;
-            color: var(--text-primary);
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        @keyframes spin {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* Typography */
-        h1 {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            font-size: 16px;
-            color: var(--text-secondary);
-            font-weight: 400;
-            margin-bottom: 32px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        /* Buttons/Links */
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 16px 24px;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            border: none;
-            width: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
-            color: #ffffff;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
-            filter: brightness(1.1);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-            border: 1px solid var(--card-border);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary:active {
-            transform: translateY(0);
-        }
-
-        /* Footer info */
-        .footer {
-            margin-top: 40px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            opacity: 0.7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            animation: fadeIn 1.2s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 0.7; }
-        }
-
-        .footer a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .footer a:hover {
-            color: var(--primary-accent);
-        }
-
-        .gh-badge {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--card-border);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-    </style>
+    <!-- Load Deferred Scripts -->
+    <script defer src="script.js"></script>
 </head>
 <body>
 
-    <!-- Ambient background glows -->
-    <div class="bg-glow-1"></div>
-    <div class="bg-glow-2"></div>
+    <!-- Fullscreen Matrix Canvas Background -->
+    <canvas id="matrix-canvas"></canvas>
 
+    <!-- Scanline overlay effect -->
+    <div class="scanlines"></div>
+
+    <!-- HUD Card Container -->
     <div class="container">
-        <div class="card">
-            <!-- Profile Avatar / Initial -->
-            <div class="profile-container">
-                <div class="avatar-ring"></div>
-                <div class="avatar">
-                    <img src="profile.png" alt="Samad Shaikh">
+        <div class="hud-card">
+            <!-- Neon corner decorations -->
+            <div class="corner-tl"></div>
+            <div class="corner-br"></div>
+
+            <!-- Profile / Identity scanning animation -->
+            <div class="profile-section">
+                <div class="avatar-container">
+                    <div class="avatar-scanner"></div>
+                    <div class="avatar-laser"></div>
+                    <img src="profile.png" alt="Samad Shaikh" class="avatar-image">
+                </div>
+                <h1>Samad Shaikh</h1>
+                <div class="ghost-tag">CYBER GHOST // ARCHITECT</div>
+            </div>
+
+            <!-- Virtual System Status display -->
+            <div class="sys-status">
+                <div class="status-row">
+                    <span class="status-label">HOSTNAME:</span>
+                    <span class="status-val">samadshaikh.me</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label">NODE STATUS:</span>
+                    <span class="status-online">SECURE // ONLINE</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label">ACCESS POINT:</span>
+                    <span class="status-val">GITHUB PAGES</span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label">ENCRYPTION:</span>
+                    <span class="status-val">AES-256-GCM / TLS 1.3</span>
                 </div>
             </div>
 
-            <!-- Name and Title -->
-            <h1>Samad Shaikh</h1>
-            <div class="subtitle">Resume / Curriculum Vitae</div>
-
-            <!-- Action buttons -->
-            <div class="btn-group">
-                <!-- Direct link to view the resume on Google Drive -->
-                <a href="https://drive.google.com/file/d/1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi/view?usp=sharing" target="_blank" class="btn btn-primary" rel="noopener noreferrer">
-                    <!-- Eye SVG Icon -->
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
+            <!-- Main Actions -->
+            <div class="console-buttons">
+                <!-- Launches the terminal simulator overlay -->
+                <button id="view-resume-btn" class="cyber-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="4 17 10 11 4 5"></polyline>
+                        <line x1="12" y1="19" x2="20" y2="19"></line>
                     </svg>
                     View Resume
-                </a>
+                </button>
 
-                <!-- Alternative direct download link -->
-                <a href="https://drive.google.com/uc?export=download&id=1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi" target="_blank" class="btn btn-secondary" rel="noopener noreferrer">
-                    <!-- Download SVG Icon -->
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Direct download payload path -->
+                <a href="https://drive.google.com/uc?export=download&id=1rPcj4LzL2tRjWXfr22Qxab70JZl8oFyi" class="cyber-btn cyber-btn-alt" download="Resume_Samad_Shaikh.pdf">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
                         <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -331,6 +80,48 @@
                     Download PDF
                 </a>
             </div>
+        </div>
+    </div>
+
+    <!-- INTERACTIVE TERMINAL WINDOW (MODAL OVERLAY) -->
+    <div id="terminal-overlay" class="terminal-overlay">
+        <div class="terminal-window">
+            
+            <!-- Window title bar controls -->
+            <div class="terminal-header">
+                <div class="window-controls">
+                    <div id="terminal-close" class="control-dot dot-close"></div>
+                    <div class="control-dot dot-min"></div>
+                    <div class="control-dot dot-max"></div>
+                </div>
+                <div class="terminal-title">guest@cyberghost: ~ (sh)</div>
+                <div style="width: 50px;"></div> <!-- Empty flex spacing -->
+            </div>
+
+            <!-- Terminal execution log window -->
+            <div id="terminal-body" class="terminal-body">
+                <div id="terminal-log">
+                    <!-- Logs printed dynamically via script.js -->
+                </div>
+
+                <!-- Hidden Iframe panel for PDF document preview -->
+                <div id="resume-embed-container" class="resume-embed-container">
+                    <!-- Retro Loading Widget -->
+                    <div id="iframe-loader" class="cyber-loader">
+                        <div class="spinner"></div>
+                        <div class="loader-text">DECRYPTING PACKET...</div>
+                    </div>
+                    <iframe id="resume-iframe" class="resume-iframe" src=""></iframe>
+                </div>
+
+                <!-- Input prompt bar -->
+                <div class="terminal-input-row">
+                    <span class="prompt-prefix">guest@cyberghost:~$</span>
+                    <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" autofocus placeholder="Type 'help' for protocol list...">
+                    <span class="terminal-cursor"></span>
+                </div>
+            </div>
+
         </div>
     </div>
 
