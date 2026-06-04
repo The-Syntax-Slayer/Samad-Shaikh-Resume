@@ -566,6 +566,12 @@ body::after {
 }
 
 @media(max-width: 600px) {
+    .portal-container {
+        padding: 0 10px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
     .portal-header {
         flex-direction: column;
         gap: 8px;
@@ -585,11 +591,36 @@ body::after {
         font-size: 16px;
     }
 
-    #pdf-viewer-box.pdf-viewer-box {
-        height: 500px !important;
-        min-height: 500px !important;
+    /* Terminal Mobile Optimizations */
+    .terminal-top {
+        padding: 8px 12px;
     }
+
+    .terminal-title-text {
+        font-size: 11px;
+    }
+
+    .terminal-logs-body {
+        padding: 15px 10px;
+        font-size: 11px;
+        min-height: 250px;
+    }
+
+    .input-prompt-field {
+        font-size: 11px;
+    }
+
+    .input-prompt-label {
+        font-size: 11px;
+    }
+
+    #pdf-viewer-box.pdf-viewer-box {
+        height: 480px !important;
+        min-height: 480px !important;
+        margin-top: 8px;
+    }
+    
     #pdf-iframe.pdf-doc-iframe {
-        min-height: 500px !important;
+        min-height: 480px !important;
     }
 }
