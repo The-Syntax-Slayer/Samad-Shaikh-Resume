@@ -399,6 +399,8 @@ body::after {
 }
 
 .terminal-shell {
+    width: 100%;
+    max-width: 100%;
     background: var(--terminal-bg);
     border: 1px solid var(--neon-cyan);
     box-shadow: 0 0 25px var(--neon-cyan-glow);
@@ -448,6 +450,9 @@ body::after {
     display: flex;
     flex-direction: column;
     min-height: 300px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .logs-output {
@@ -498,12 +503,17 @@ body::after {
 
 .input-prompt-field {
     flex: 1;
+    min-width: 0; /* Prevents default input size from expanding flex container */
     background: transparent;
     border: none;
     outline: none;
     color: var(--text-bright);
     font-family: var(--font-code);
     font-size: 13px;
+}
+
+.prompt-desktop {
+    display: inline;
 }
 
 .cursor-flash {
@@ -570,6 +580,8 @@ body::after {
         padding: 0 10px;
         margin-top: 20px;
         margin-bottom: 10px;
+        width: 100%;
+        max-width: 100%;
     }
 
     .portal-header {
@@ -596,12 +608,21 @@ body::after {
         padding: 8px 12px;
     }
 
+    .terminal-top > div:last-child {
+        display: none !important; /* Hide 50px spacer to free up title text room */
+    }
+
     .terminal-title-text {
         font-size: 11px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 60px); /* Leave space for dots */
+        text-align: right;
     }
 
     .terminal-logs-body {
-        padding: 15px 10px;
+        padding: 12px 10px;
         font-size: 11px;
         min-height: 250px;
     }
@@ -612,6 +633,10 @@ body::after {
 
     .input-prompt-label {
         font-size: 11px;
+    }
+
+    .prompt-desktop {
+        display: none; /* Hide 'guest@cyberghost:' on mobile to prevent input squeezing */
     }
 
     #pdf-viewer-box.pdf-viewer-box {
