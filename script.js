@@ -81,23 +81,17 @@ document.addEventListener("DOMContentLoaded", () => {
     updateMeters(); // Initial call
 
 
-    // ----------------------------------------------------
-    // WORKSPACE CONSOLE FEED LOG GENERATOR
-    // ----------------------------------------------------
     const consoleOutput = document.getElementById("console-output-box");
-
     const logTemplates = [
-        { text: "[INFO] Handshaking secure channel with node samadshaikh.me...", class: "log-info" },
-        { text: "[SUCCESS] Decryption protocol loaded: AES-256-GCM online.", class: "log-success" },
-        { text: "[INFO] Core framework check: Node.js active, React components validated.", class: "log-info" },
-        { text: "[WARN] IP packet delay detected in gateway bridge. Re-routing tunnel...", class: "log-warn" },
-        { text: "[SUCCESS] Route updated successfully. Latency drop to 18ms.", class: "log-success" },
-        { text: "[INFO] Fetching network telemetry... 0 packet loss.", class: "log-info" },
-        { text: "[INFO] Resolving subdomain entries in DNS challenge...", class: "log-info" },
-        { text: "[SUCCESS] TXT DNS challenge verified for domain samadshaikh.me.", class: "log-success" },
-        { text: "[INFO] Compiling script packages... optimized bundle generated.", class: "log-info" },
-        { text: "[WARN] Cache consolidation recommended. Initiating automatic purge...", class: "log-warn" },
-        { text: "[SUCCESS] Memory pool cleanup complete. 512MB buffers cleared.", class: "log-success" }
+        { text: "[ANALYZING] Scanning Samad's experience... Found 3+ years in Full-Stack Development.", class: "log-info" },
+        { text: "[DECRYPTING] Extracting projects... MockMate-AI, Planora, WebLens parsed successfully.", class: "log-info" },
+        { text: "[SUCCESS] Database connection stable. Welcome Guest Recruiter.", class: "log-success" },
+        { text: "[INFO] Skills verification complete: Node.js, Python, TypeScript, Go & Cloud tools.", class: "log-info" },
+        { text: "[INFO] Scanning system architecture... Docker containers running, APIs optimized.", class: "log-info" },
+        { text: "[SUCCESS] Resume payload mapped. Click 'View Resume Shell' to inspect.", class: "log-success" },
+        { text: "[INFO] Mapping developer parameters: Frontend (React/Next.js) | Backend (Express/FastAPI).", class: "log-info" },
+        { text: "[INFO] Telemetry synced. GitHub repositories active & tracked.", class: "log-info" },
+        { text: "[SUCCESS] Portfolio gateway loaded. All systems nominal.", class: "log-success" }
     ];
 
     const generateLog = () => {
