@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.samadshaikh.me/sitemap.xml
+Sitemap: https://samadshaikh.me/sitemap.xml
