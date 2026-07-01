@@ -360,7 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pdfLoader.style.opacity = "1";
         pdfLoader.style.display = "flex";
         
-        pdfIframe.src = "https://drive.google.com/file/d/1AvMFcDKO_AWci2HLPeVfkXJJvBblSu0a/preview";
+        pdfIframe.src = "https://drive.google.com/file/d/1Pw3kb7UVNpXx6o0NOoRqaz2K1z5NzPPJ/preview";
 
         pdfIframe.onload = () => {
             adjustPDFScale();
@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Standard link backup in case of cookie iframe blocks
         setTimeout(() => {
             printLine("Did your browser block the Google Drive cookie panel?", "l-dim");
-            printLine("<a href='https://drive.google.com/file/d/1AvMFcDKO_AWci2HLPeVfkXJJvBblSu0a/view?usp=sharing' target='_blank' style='color:#00f3ff; text-decoration:underline;'>[Click here to decrypt and open in a new workspace window]</a>", "l-cyan");
+            printLine("<a href='https://drive.google.com/file/d/1Pw3kb7UVNpXx6o0NOoRqaz2K1z5NzPPJ/view?usp=sharing' target='_blank' style='color:#00f3ff; text-decoration:underline;'>[Click here to decrypt and open in a new workspace window]</a>", "l-cyan");
         }, 1500);
     };
 });
