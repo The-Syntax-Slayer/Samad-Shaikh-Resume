@@ -290,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
             case "download":
                 printLine("Decrypting and requesting file payload packet...", "l-green");
                 setTimeout(() => {
-                    window.open("https://drive.google.com/file/d/1AvMFcDKO_AWci2HLPeVfkXJJvBblSu0a", "_blank");
+                    window.open("https://docs.google.com/document/d/1bIu_HW64GE8AmPA2uonXUi9kQt9aeeHpQDw53zJ9t18", "_blank");
                 }, 500);
                 break;
 
