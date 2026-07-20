@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Standard link backup in case of cookie iframe blocks
         setTimeout(() => {
             printLine("Did your browser block the Google Drive cookie panel?", "l-dim");
-            printLine("<a href='https://docs.google.com/document/d/1bIu_HW64GE8AmPA2uonXUi9kQt9aeeHpQDw53zJ9t18/view?usp=sharing' target='_blank' style='color:#00f3ff; text-decoration:underline;'>[Click here to decrypt and open in a new workspace window]</a>", "l-cyan");
+            printLine("<a href='https://docs.google.com/document/d/1bIu_HW64GE8AmPA2uonXUi9kQt9aeeHpQDw53zJ9t18/edit?usp=sharing' target='_blank' style='color:#00f3ff; text-decoration:underline;'>[Click here to decrypt and open in a new workspace window]</a>", "l-cyan");
         }, 1500);
     };
 });
